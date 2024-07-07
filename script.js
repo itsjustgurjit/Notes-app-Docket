@@ -17,6 +17,8 @@ async function animation_bg(bgColor) {
 
 let colorbtn_show = false;
 
+let edit_note_btns = document.querySelectorAll(".edit-note-btn");
+
 sidebar.addEventListener("mouseleave", (e) => {
   hidecolorbtns();
 });
@@ -92,29 +94,57 @@ colorbtns.forEach((colorbtn) => {
     document.body.classList.add("body-blur");
   });
 });
-
-async function addNote(colorBtn,textAreaVal) {
-  let note = document.createElement("div");
-  note.classList.add("note");
-  note.innerHTML = `
-      <div class="note-content">
-        <p>${textAreaVal}</p>
-        <div class="note-bottom">
-          <div class="date-div">
-            ${await today_date()}
+async function addNote(colorBtn, textAreaVal) {
+    let note = document.createElement("div");
+    note.classList.add("note");
+    note.innerHTML = `
+        <div class="note-content">
+          <p>${textAreaVal}</p>
+          <div class="note-bottom">
+            <div class="date-div">
+              ${await today_date()}
+            </div>
+            <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
           </div>
-          <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
-        </div>
-      </div>`;
-  note.style.backgroundColor = `#${cr_color}`;
-  let bgColor = `#${cr_color}`;
-  console.log(bgColor);
-  animation_bg(bgColor);
-  soundeffect();
-  let notesContainer = document.querySelector(".notes-container");
-  notesContainer.insertBefore(note, notesContainer.firstChild);
-}
+        </div>`;
+    note.style.backgroundColor = `#${cr_color}`;
+    let bgColor = `#${cr_color}`;
+    console.log(bgColor);
+    animation_bg(bgColor);
+    soundeffect();
+    let notesContainer = document.querySelector(".notes-container");
+    notesContainer.insertBefore(note, notesContainer.firstChild);
+    
+    let edit_note_btns = document.querySelectorAll(".edit-note-btn");
+  
+    // Attach edit event listeners
+    edit_note_btns.forEach((edit_note_btn) => {
+      edit_note_btn.addEventListener("click", (e) => {
+        let selected_note = e.target.closest(".note");
+        console.log(selected_note);
+        dialog.showModal();
+        let editing_modal = document.querySelector("dialog");
+        let text_edited = selected_note.querySelector(".note-content p");
+        note_textarea.value = text_edited.textContent;
+        editing_modal.querySelector(".save-note-btn").style.display = "none";
+        let save_edited = editing_modal.querySelector(".save-edited-note-btn");
+        save_edited.style.display = "flex";
 
+        // Remove previous click event listener to prevent multiple triggers
+        save_edited.replaceWith(save_edited.cloneNode(true));
+        save_edited = editing_modal.querySelector(".save-edited-note-btn");
+  
+        save_edited.addEventListener("click", () => {
+          selected_note.querySelector("p").textContent = note_textarea.value;
+          console.log(selected_note);
+          editing_modal.querySelector(".save-edited-note-btn").style.display = "none";
+          editing_modal.querySelector(".save-note-btn").style.display = "flex";
+          editing_modal.close();
+        });
+      });
+    });
+  }
+  
 // hide color btns
 
 async function hidecolorbtns() {
@@ -128,9 +158,9 @@ async function hidecolorbtns() {
   });
 }
 
-function soundeffect() {
+async function soundeffect() {
   let audio = new Audio();
-  audio.src = "/soundeffect.wav";
+  audio.src = "soundeffect.wav";
   audio.play();
 }
 // dialog
@@ -150,12 +180,16 @@ closeButton.addEventListener("click", () => {
 
 let addnotemodal_btn = document.querySelector(".save-note-btn");
 
+let note_textarea = document.querySelector("#note_textarea");
+
 addnotemodal_btn.addEventListener("click", (e) => {
-  let note_textarea = document.querySelector("#note_textarea");
   let textAreaVal = note_textarea.value;
   if (note_textarea.value != "") {
-    addNote(cr_color,textAreaVal);
+    addNote(cr_color, textAreaVal);
     note_textarea.value = "";
+    dialog.close();
+  } else {
+    addNote(cr_color, (textAreaVal = "Note"));
     dialog.close();
   }
 });

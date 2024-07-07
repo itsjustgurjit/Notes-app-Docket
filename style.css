@@ -196,16 +196,16 @@ h1 {
   background-color: #ffdd1d;
 }
 .colors-btn.color-two {
-  background-color: #ff934b;
+  background-color: #edac80;
 }
 .colors-btn.color-three {
-  background-color: #bd94ff;
+  background-color: #cbaaff;
 }
 .colors-btn.color-four {
-  background-color: #42d0ff;
+  background-color: #6edbff;
 }
 .colors-btn.color-five {
-  background-color: #6de660;
+  background-color: #9afa8f;
 }
 
 /* add animation of bounce */
@@ -301,10 +301,46 @@ dialog {
     font-size: 17px;
     z-index: 999;
 }
+  
+.save-edited-note-btn{
+  border-radius: 61px;
+    background-color: #000000;
+    border: none;
+    padding: 9px 15px 9px 7px;;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    bottom: 9px;
+    gap: 7px;
+    display: flex;
+    align-items: center;
+    right: 15px;
+    font-size: 17px;
+    z-index: 999;
+}
 
 dialog h2{
   background-color: #c0ffb387;
   backdrop-filter: blur(10px);
   color: rgb(0, 0, 0);
   padding: 15px 25px;
+}
+
+button:hover{
+  scale: 1.1;
+  transition: all 0.3s;
+}
+
+.tell_user_modal{
+  position: absolute;
+  top: 2.5vh;
+  left: 40vw;
+  padding: 12px;
+  border-radius: 9px;
+  color: white;
+  background-color: rgba(22, 22, 22, 0.903);
+  backdrop-filter: blur(10px);
+  z-index: 99999;
+  display: none;
 }
