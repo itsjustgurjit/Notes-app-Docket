@@ -141,6 +141,8 @@ h1 {
 .note-content p {
   font-size: 18px;
   font-weight: 500;
+  height: 68%;
+  overflow: hidden;
 }
 .note-bottom {
   display: flex;
@@ -202,7 +204,7 @@ h1 {
   background-color: #cbaaff;
 }
 .colors-btn.color-four {
-  background-color: #6edbff;
+  background-color: #42d0ff;
 }
 .colors-btn.color-five {
   background-color: #9afa8f;
