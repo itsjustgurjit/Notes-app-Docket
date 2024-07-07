@@ -7,15 +7,12 @@ async function animation_bg(bgColor) {
   const viewportHeight = window.innerHeight;
   const randomTop = Math.random() * viewportHeight;
   colorfulElement.style.top = `${randomTop}px`;
-  // Add the 'active' class after a short delay
   setTimeout(() => {
     colorfulElement.classList.add("active");
-
-    // Remove the 'active' class after the animation duration (1s in this case)
     setTimeout(() => {
       colorfulElement.classList.remove("active");
-    }, 900); // Match this duration to the animation duration in CSS
-  }, 0); // Adjust this delay as needed
+    }, 900);
+  }, 0);
 }
 
 let colorbtn_show = false;
@@ -59,28 +56,53 @@ async function showcolorbuttons() {
 let colorbtns = document.querySelectorAll(".colors-btn");
 
 colorbtns.forEach((colorbtn) => {
-    colorbtn.addEventListener("click", (e) => {
-      let colorBtn = e.target;
-      let note = document.createElement("div");
-      note.classList.add("note");
-      note.innerHTML = `
+  colorbtn.addEventListener("click", (e) => {
+    let colorBtn = e.target;
+    let note = document.createElement("div");
+    note.classList.add("note");
+    note.innerHTML = `
               <div class="note-content">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. oiehfiuhefih oihiu iug</p>
                 <div class="note-bottom">
-                  <div class="date-div">Feb 23,2019</div>
+                  <div class="date-div">
+                  ${today_date()}
+                  </div>
                   <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
                 </div>
-              </div>`
-      note.style.backgroundColor = `#${colorbtn.getAttribute("id")}`;
-      let bgColor = getComputedStyle(colorBtn).backgroundColor;
-      animation_bg(bgColor);
-      let notesContainer = document.querySelector(".notes-container");
-      notesContainer.insertBefore(note, notesContainer.firstChild);
-      let notewidth = note.getBoundingClientRect().width;
-      note.style.height = notewidth + "px";
-    });
+              </div>`;
+    note.style.backgroundColor = `#${colorbtn.getAttribute("id")}`;
+    let bgColor = getComputedStyle(colorBtn).backgroundColor;
+    animation_bg(bgColor);
+    soundeffect();
+    let notesContainer = document.querySelector(".notes-container");
+    notesContainer.insertBefore(note, notesContainer.firstChild);
   });
-  
+});
+
+console.log(today_date());
+
+function today_date() {
+  let date = new Date();
+  let year = date.getFullYear();
+  let monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  let month = monthNames[date.getMonth()]; // Get the month name from the array
+  let day = date.getDate();
+  let stringdate = `${month} ${day}, ${year}`;
+  return stringdate;
+}
 
 // hide color btns
 
@@ -93,4 +115,10 @@ async function hidecolorbtns() {
       colorbtn.style.scale = "0";
     }, 200 * index);
   });
+}
+
+function soundeffect() {
+  let audio = new Audio();
+  audio.src = "/soundeffect.wav";
+  audio.play();
 }
