@@ -52,35 +52,6 @@ async function showcolorbuttons() {
   });
 }
 
-// adding note
-let colorbtns = document.querySelectorAll(".colors-btn");
-
-colorbtns.forEach((colorbtn) => {
-  colorbtn.addEventListener("click", (e) => {
-    let colorBtn = e.target;
-    let note = document.createElement("div");
-    note.classList.add("note");
-    note.innerHTML = `
-              <div class="note-content">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. oiehfiuhefih oihiu iug</p>
-                <div class="note-bottom">
-                  <div class="date-div">
-                  ${today_date()}
-                  </div>
-                  <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
-                </div>
-              </div>`;
-    note.style.backgroundColor = `#${colorbtn.getAttribute("id")}`;
-    let bgColor = getComputedStyle(colorBtn).backgroundColor;
-    animation_bg(bgColor);
-    soundeffect();
-    let notesContainer = document.querySelector(".notes-container");
-    notesContainer.insertBefore(note, notesContainer.firstChild);
-  });
-});
-
-console.log(today_date());
-
 function today_date() {
   let date = new Date();
   let year = date.getFullYear();
@@ -102,6 +73,46 @@ function today_date() {
   let day = date.getDate();
   let stringdate = `${month} ${day}, ${year}`;
   return stringdate;
+}
+
+// adding note
+let colorbtns = document.querySelectorAll(".colors-btn");
+
+let cr_color = "";
+
+colorbtns.forEach((colorbtn) => {
+  colorbtn.addEventListener("click", (e) => {
+    cr_color = colorbtn.getAttribute("id");
+    let colorBtn = e.target;
+    console.log(cr_color);
+    dialog.showModal(colorBtn);
+    document.querySelector(
+      "dialog h2"
+    ).style.backgroundColor = `#${colorBtn.getAttribute("id")}`;
+    document.body.classList.add("body-blur");
+  });
+});
+
+async function addNote(colorBtn,textAreaVal) {
+  let note = document.createElement("div");
+  note.classList.add("note");
+  note.innerHTML = `
+      <div class="note-content">
+        <p>${textAreaVal}</p>
+        <div class="note-bottom">
+          <div class="date-div">
+            ${await today_date()}
+          </div>
+          <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
+        </div>
+      </div>`;
+  note.style.backgroundColor = `#${cr_color}`;
+  let bgColor = `#${cr_color}`;
+  console.log(bgColor);
+  animation_bg(bgColor);
+  soundeffect();
+  let notesContainer = document.querySelector(".notes-container");
+  notesContainer.insertBefore(note, notesContainer.firstChild);
 }
 
 // hide color btns
@@ -127,15 +138,24 @@ let logo = document.querySelector(".logo");
 
 const dialog = document.querySelector("dialog");
 
-const closeButton = document.querySelector("dialog button");
+const closeButton = document.querySelector(".close-note-btn");
 
 // "Show the dialog" button opens the dialog modally
-logo.addEventListener("click", () => {
-  dialog.showModal();
-});
-
 
 // "Close" button closes the dialog
 closeButton.addEventListener("click", () => {
   dialog.close();
+  document.body.classList.remove("body-blur");
+});
+
+let addnotemodal_btn = document.querySelector(".save-note-btn");
+
+addnotemodal_btn.addEventListener("click", (e) => {
+  let note_textarea = document.querySelector("#note_textarea");
+  let textAreaVal = note_textarea.value;
+  if (note_textarea.value != "") {
+    addNote(cr_color,textAreaVal);
+    note_textarea.value = "";
+    dialog.close();
+  }
 });
