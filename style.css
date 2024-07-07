@@ -141,7 +141,7 @@ h1 {
 .note-content p {
   font-size: 18px;
   font-weight: 500;
-  height: 68%;
+   height: 68%;
   overflow: hidden;
 }
 .note-bottom {
@@ -284,6 +284,20 @@ dialog {
   position: absolute;
   top: 9px;
   right: 15px;
+  z-index: 999;
+}
+.delete-note-btn{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #000000;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 9px;
+  right: 68px;
   z-index: 999;
 }
 .save-note-btn{
