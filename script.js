@@ -122,3 +122,20 @@ function soundeffect() {
   audio.src = "/soundeffect.wav";
   audio.play();
 }
+// dialog
+let logo = document.querySelector(".logo");
+
+const dialog = document.querySelector("dialog");
+
+const closeButton = document.querySelector("dialog button");
+
+// "Show the dialog" button opens the dialog modally
+logo.addEventListener("click", () => {
+  dialog.showModal();
+});
+
+
+// "Close" button closes the dialog
+closeButton.addEventListener("click", () => {
+  dialog.close();
+});
