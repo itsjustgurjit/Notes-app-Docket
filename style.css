@@ -1,180 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; 
-    font-family: "Roboto", sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
-body{
-    display: flex;
+body {
+  display: flex;
 }
 ::-webkit-scrollbar {
-    width: 9px;  /* Set the width of the scrollbar */
-}
-
-::-webkit-scrollbar-track {
-    
+  width: 9px; /* Set the width of the scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(145, 145, 145, 0.499);  /* Color of the scrollbar thumb */
-    border-radius: 10px;  /* Round corners of the scrollbar thumb */
-   
+  background-color: rgba(
+    145,
+    145,
+    145,
+    0.499
+  ); /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Round corners of the scrollbar thumb */
 }
-.sidebar{
-    height: 100vh;
-    padding: 5vh 5vw;
-    max-width: 150px;
-    display: flex;
-    position: sticky;
-    top: 0;
-    backdrop-filter: blur(95px);
-    align-items: center;
-    flex-direction: column;
-    border-right :1px solid #d7d7d7;
+.sidebar {
+  height: 100vh;
+  padding: 5vh 5vw;
+  max-width: 150px;
+  display: flex;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(95px);
+  align-items: center;
+  flex-direction: column;
+  border-right: 1px solid #d7d7d7;
 }
-.logo{
-    font-size: 20px;
-    font-weight: 700;
-    color: #111111;
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111111;
 }
-.add-note{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #111111;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-    position: absolute;
-    top: 13vh;
-}
-.bouce-animation{
-    animation: button-bounce 0.5s;
-}
-
-.search-div{
-    top: 0;
-    width: 100%;
-    padding: 4vh 5vh;
-    background-color: rgba(255, 255, 255, 0.923);
-    display: flex;
-    align-items: center;
-    backdrop-filter: blur(5px);
-    box-shadow: 6px 8px 10px rgba(255, 255, 255, 0.923);
-    position: sticky;
-}
-.main{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.search{
-    border: none;
-    padding: 10px 10px;
-    font-size: 18px;
-    width: 60vw;
-    background: none;
-    font-weight: 400;
-}
-.search:focus-visible{
-    outline: none;
-}
-h1{
-    padding: 0 5vh;
-    backdrop-filter: blur(10px);
-}
-.notes-container{
-    padding: 4vh 5vh;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    backdrop-filter: blur(10px);
+.add-note {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #111111;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 13vh;
 }
 
-.note{
-    width: 25%;
-    min-width: 200px;
-    padding: 20px;
-    border-radius: 12px;
-    background-color: rgb(211, 229, 246);
+.edit-note-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #111111;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
 }
-.notes-div{
-    width: 100%;
+.bouce-animation {
+  animation: button-bounce 0.5s;
 }
-/* color add  btn*/
 
-.colors-btn{
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-    position: absolute;
-    top: 13vh;
-    z-index: -1;
-    transition: all 0.3s;
+.search-div {
+  top: 0;
+  width: 100%;
+  padding: 4vh 5vh;
+  background-color: rgba(255, 255, 255, 0.923);
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 6px 8px 10px rgba(255, 255, 255, 0.923);
+  position: sticky;
 }
+.main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.search {
+  border: none;
+  padding: 10px 10px;
+  font-size: 18px;
+  width: 60vw;
+  background: none;
+  font-weight: 400;
+}
+.search:focus-visible {
+  outline: none;
+}
+h1 {
+  padding: 0 5vh;
+  backdrop-filter: blur(10px);
+}
+.notes-container {
+  padding: 4vh 5vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.note {
+  min-height: 230px;
+  min-width: 230px;
+  width: 20vw;
+  height: 20vw;
+  position: relative; /* Necessary for positioning the pseudo-element */
+  padding: 20px;
+  border-radius: 12px;
+  background-color: rgb(211, 229, 246);
+}
+.note-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.date-div {
+  position: relative;
+  top: 3px;
+}
+
+.note-content p {
+  font-size: 18px;
+  font-weight: 500;
+}
+.note-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.notes-div {
+  width: 100%;
+}
+
+.colors-btn {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  position: absolute;
+  top: 13vh;
+  z-index: -1;
+  transition: all 0.3s;
+}
+.colors-btn:hover {
+  scale: 1.3;
+  border: 1.7px dotted black;
+  transition: all 0.3s;
+  animation: button-bounce-color 1s infinite;
+}
+
+@keyframes button-bounce-color {
+  0% {
+    transform: scale(1);
+    rotate: 0deg;
+  }
+  50% {
+    transform: scale(1.3);
+    rotate: 180deg;
+  }
+  100% {
+    transform: scale(1);
+    rotate: 360deg;
+  }
+}
+
 .colors-btn:active {
-    transform: scale(1.7); 
+  transform: scale(1.7);
 }
 
-.colors-btn.one-color{
-    background-color: #ffdd1d;
+.colors-btn.one-color {
+  background-color: #ffdd1d;
 }
-.colors-btn.color-two{
-    background-color: #ff934b;
+.colors-btn.color-two {
+  background-color: #ff934b;
 }
-.colors-btn.color-three{
-    background-color: #bd94ff;
+.colors-btn.color-three {
+  background-color: #bd94ff;
 }
-.colors-btn.color-four{
-    background-color: #42d0ff;
+.colors-btn.color-four {
+  background-color: #42d0ff;
 }
-.colors-btn.color-five{
-    background-color: #6de660;
+.colors-btn.color-five {
+  background-color: #6de660;
 }
 
 /* add animation of bounce */
 
 @keyframes button-bounce {
-    0%{
-        transform: scale(1);
-        top: 13vh;
-    }
-    50%{
-        transform: scale(1.2);
-        top: 12vh;
-    }
-    100%{
-        transform: scale(1);
-        top: 13vh;
-    }
+  0% {
+    transform: scale(1);
+    top: 13vh;
+  }
+  50% {
+    transform: scale(1.2);
+    top: 12vh;
+  }
+  100% {
+    transform: scale(1);
+    top: 13vh;
+  }
 }
 .colorful {
-    border-radius: 50%;
-    position: absolute;
-    top: 13vh;
-    left: -75vw;
-    width: 80%;
-    height: 80%;
-    background-color: rgba(255, 59, 59, 0.5);
-    z-index: -99;
-    backdrop-filter: blur(10px);
-    transform: scale(0.3); /* Use transform for scaling */
-    opacity: 0;
-    transition: opacity 700ms, transform 700ms; /* Smooth transition for opacity and transform */
+  border-radius: 50%;
+  position: absolute;
+  top: 13vh;
+  left: -75vw;
+  width: 80%;
+  height: 80%;
+  background-color: rgba(255, 59, 59, 0.5);
+  z-index: -99;
+  backdrop-filter: blur(10px);
+  transform: scale(0.3); /* Use transform for scaling */
+  opacity: 0;
+  transition: opacity 700ms, transform 700ms; /* Smooth transition for opacity and transform */
 }
 
 .colorful.active {
-    opacity: 1;
-    transform: scale(1); /* Use transform for scaling */
+  opacity: 1;
+  transform: scale(1); /* Use transform for scaling */
 }
-
