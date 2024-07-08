@@ -375,6 +375,7 @@ async function savetolocalstorage() {
         selected_note.remove();
         editing_modal.close();
         savetolocalstorage();
+        updateNoNotesMessage();
       };
   
       save_edited.replaceWith(save_edited.cloneNode(true));
