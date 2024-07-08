@@ -94,6 +94,7 @@ let colorbtns = document.querySelectorAll(".colors-btn");
 
 let cr_color = "";
 const colors = ["ffdd1d", "edac80", "cbaaff", "42d0ff", "9afa8f"];
+
 async function show_modal_to_add_note(colorbtn, e) {
   try {
     cr_color = colorbtn.getAttribute("id");
@@ -130,6 +131,7 @@ colorbtns.forEach((colorbtn) => {
   });
 });
 
+
 async function addNote(colorBtn, textAreaVal) {
   let note = document.createElement("div");
   note.classList.add("note");
@@ -150,7 +152,7 @@ async function addNote(colorBtn, textAreaVal) {
   soundeffect();
   let notesContainer = document.querySelector(".notes-container");
   notesContainer.insertBefore(note, notesContainer.firstChild);
-
+ await updatenotes();
   let edit_note_btns = document.querySelectorAll(".edit-note-btn");
 
   // Attach edit event listeners
@@ -210,10 +212,15 @@ async function hidecolorbtns() {
 }
 
 async function soundeffect() {
-  let audio = new Audio();
+  try {
+    let audio = new Audio();
   audio.src = "soundeffect.wav";
-  audio.play();
+  await audio.play();
+  } catch (error) {
+    console.log('not playing sound effect');
+  }
 }
+
 // dialog
 let logo = document.querySelector(".logo");
 
@@ -249,6 +256,7 @@ addnotemodal_btn.addEventListener("click", (e) => {
 async function updatenotes() {
   updated_notes = document.querySelectorAll(".note");
   console.log(updated_notes);
+  savetolocalstorage();
   return updated_notes;
 }
 
@@ -290,3 +298,92 @@ notesContainer.addEventListener("click", (e) => {
 closeNoteBtn.addEventListener("click", () => {
   preview_modal.close();
 });
+
+// save to local storage
+
+async function savetolocalstorage() {
+    let notes = document.querySelectorAll(".note");
+    let notes_data = [];
+    notes.forEach((note) => {
+      let note_text = note.querySelector("p").textContent;
+      let note_color = note.style.backgroundColor;
+      notes_data.push({ text: note_text, color: note_color });
+    });
+    localStorage.setItem("notes", JSON.stringify(notes_data));
+  }
+  
+
+  document.addEventListener("DOMContentLoaded", () => {
+    let lcnotes = JSON.parse(localStorage.getItem("notes"));
+    if (lcnotes) {
+        lcnotes.reverse();
+        console.log(lcnotes);
+      lcnotes.forEach((noteData) => {
+        addNotefromlocal(noteData.color, noteData.text);
+      });
+    }
+  });
+
+  async function addNotefromlocal(color, text) {
+    let note = document.createElement("div");
+    note.classList.add("note");
+    note.innerHTML = `
+        <div class="note-content">
+          <p>${text}</p>
+          <div class="note-bottom">
+            <div class="date-div">
+              ${await today_date()}
+            </div>
+            <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
+          </div>
+        </div>`;
+    note.style.backgroundColor = color;
+    let bgColor = color;
+    let notesContainer = document.querySelector(".notes-container");
+    notesContainer.insertBefore(note, notesContainer.firstChild);
+    // Attach edit event listeners (for existing notes)
+    attachEditEventListeners(note);
+  }
+  function attachEditEventListeners(note) {
+    let edit_note_btn = note.querySelector(".edit-note-btn");
+    edit_note_btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      let selected_note = e.target.closest(".note");
+      console.log(selected_note);
+  
+      // Get the background color of the selected note
+      let noteBgColor = window.getComputedStyle(selected_note).backgroundColor;
+  
+      let editing_modal = document.querySelector("dialog");
+      let editing_modal_heading = editing_modal.querySelector("h2");
+      
+      // Set the modal heading background color to match the note
+      editing_modal_heading.style.backgroundColor = noteBgColor;
+  
+      dialog.showModal();
+      let text_edited = selected_note.querySelector(".note-content p");
+      note_textarea.value = text_edited.textContent;
+      editing_modal.querySelector(".save-note-btn").style.display = "none";
+      let save_edited = editing_modal.querySelector(".save-edited-note-btn");
+      save_edited.style.display = "flex";
+  
+      // Add delete functionality
+      let delete_btn = editing_modal.querySelector(".delete-note-btn");
+      delete_btn.onclick = () => {
+        selected_note.remove();
+        editing_modal.close();
+        savetolocalstorage();
+      };
+  
+      save_edited.replaceWith(save_edited.cloneNode(true));
+      save_edited = editing_modal.querySelector(".save-edited-note-btn");
+      save_edited.addEventListener("click", () => {
+        selected_note.querySelector("p").textContent = note_textarea.value;
+        console.log(selected_note);
+        editing_modal.querySelector(".save-edited-note-btn").style.display = "none";
+        editing_modal.querySelector(".save-note-btn").style.display = "flex";
+        editing_modal.close();
+        savetolocalstorage();
+      });
+    });
+  }
