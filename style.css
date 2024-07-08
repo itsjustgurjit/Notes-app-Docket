@@ -125,7 +125,6 @@ h1 {
 
 .note:hover {
   box-shadow: 1px 2px 18px rgba(0, 0, 0, 0.137);
-  
 }
 
 .note-content {
@@ -383,7 +382,6 @@ button:hover {
 @media only screen and (max-width: 576px) {
   body {
     flex-direction: column;
-
   }
   .sidebar {
     height: unset;
@@ -397,32 +395,45 @@ button:hover {
     justify-content: space-between;
     border-right: 1px solid #d7d7d7;
   }
-  .add-note{
+  .add-note {
     position: unset;
   }
-  .logo{
+  .logo {
     font-size: 24px;
   }
-  .search-div{
+  .search-div {
     padding: 0vh 2vh;
     background: #ececec;
     border-radius: 36px;
     max-width: 96vw;
     margin: 7px 0;
   }
-  h1{
+  h1 {
     display: none;
   }
-  .colors-btn{
+  .colors-btn {
     display: none;
   }
-  .notes-container{
+  .notes-container {
     padding: 2vw;
   }
-  .note{
+  .note {
     width: 100%;
   }
-  .colorful{
+  .colorful {
     filter: blur(50px);
   }
+}
+
+.no-notes {
+  display: flex;
+  color: #bdbdbd;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 17vh;
+  gap: 20px;
+  width: 100%;
+}
+.no-notes img{
+  max-width: 26%;
 }

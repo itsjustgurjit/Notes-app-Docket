@@ -257,6 +257,7 @@ async function updatenotes() {
   updated_notes = document.querySelectorAll(".note");
   console.log(updated_notes);
   savetolocalstorage();
+  updateNoNotesMessage();
   return updated_notes;
 }
 
@@ -386,4 +387,15 @@ async function savetolocalstorage() {
         savetolocalstorage();
       });
     });
+  }
+
+  function updateNoNotesMessage() {
+    const noNotesMessage = document.querySelector('.no-notes');
+    const notes = document.querySelectorAll('.note');
+    
+    if (notes.length > 0) {
+      noNotesMessage.style.display = 'none';
+    } else {
+      noNotesMessage.style.display = 'flex';
+    }
   }
