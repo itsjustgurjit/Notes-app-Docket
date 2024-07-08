@@ -344,6 +344,7 @@ async function savetolocalstorage() {
     notesContainer.insertBefore(note, notesContainer.firstChild);
     // Attach edit event listeners (for existing notes)
     attachEditEventListeners(note);
+    updateNoNotesMessage();
   }
   function attachEditEventListeners(note) {
     let edit_note_btn = note.querySelector(".edit-note-btn");
