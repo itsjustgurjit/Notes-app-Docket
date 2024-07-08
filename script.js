@@ -34,12 +34,22 @@ main_btn.addEventListener("click", (e) => {
   setTimeout(() => {
     main_btn.classList.remove("bouce-animation");
   }, 500);
-  showcolorbuttons();
-  if (colorbtn_show) {
-    hidecolorbtns();
-    colorbtn_show = false;
+  if (window.innerWidth < 576) {
+    let colorbtn = document.querySelectorAll(".colors-btn");
+    let e = document.querySelectorAll(".colors-btn");
+    let randomnum = Math.floor(Math.random() * 5) + 1;
+    let cr_color = colors[randomnum];
+    colorbtn = colorbtn[randomnum];
+    e = e[randomnum];
+    show_modal_to_add_note(colorbtn, e);
   } else {
-    colorbtn_show = true;
+    showcolorbuttons();
+    if (colorbtn_show) {
+      hidecolorbtns();
+      colorbtn_show = false;
+    } else {
+      colorbtn_show = true;
+    }
   }
 });
 
@@ -83,19 +93,43 @@ function today_date() {
 let colorbtns = document.querySelectorAll(".colors-btn");
 
 let cr_color = "";
-
-colorbtns.forEach((colorbtn) => {
-  colorbtn.addEventListener("click", (e) => {
+const colors = ["ffdd1d", "edac80", "cbaaff", "42d0ff", "9afa8f"];
+async function show_modal_to_add_note(colorbtn, e) {
+  try {
     cr_color = colorbtn.getAttribute("id");
-    let colorBtn = e.target;
-    console.log(cr_color);
-    dialog.showModal(colorBtn);
+  } catch (error) {
+    let rnDnm = Math.floor(Math.random() * 5) + 1;
+    cr_color = colors[rnDnm];
+  }
+  console.log(cr_color, e, colorbtn);
+  let colorBtn;
+  if (e !== undefined) {
+    colorBtn = e.target;
+  } else {
+    let colorbtns = document.querySelectorAll(".colors-btn");
+    let randomnum = Math.floor(Math.random() * colors.length);
+    let cr_color = colors[randomnum];
+    colorBtn = colorbtns[randomnum];
+  }
+  console.log(cr_color);
+  dialog.querySelector("textarea").value = "";
+  dialog.showModal(colorBtn);
+  try {
     document.querySelector(
       "dialog h2"
     ).style.backgroundColor = `#${colorBtn.getAttribute("id")}`;
-    document.body.classList.add("body-blur");
+  } catch (error) {
+    document.querySelector("dialog h2").style.backgroundColor = `#${cr_color}`;
+  }
+  document.body.classList.add("body-blur");
+}
+
+colorbtns.forEach((colorbtn) => {
+  colorbtn.addEventListener("click", (e) => {
+    show_modal_to_add_note(colorbtn, e);
   });
 });
+
 async function addNote(colorBtn, textAreaVal) {
   let note = document.createElement("div");
   note.classList.add("note");
@@ -122,15 +156,12 @@ async function addNote(colorBtn, textAreaVal) {
   // Attach edit event listeners
   edit_note_btns.forEach((edit_note_btn) => {
     edit_note_btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-
-        
+      e.stopPropagation();
 
       let selected_note = e.target.closest(".note");
       console.log(selected_note);
 
       let noteBgColor = window.getComputedStyle(selected_note).backgroundColor;
-      
 
       let editing_modal = document.querySelector("dialog");
       let editing_modal_heading = editing_modal.querySelector("h2");
@@ -246,15 +277,15 @@ let preview_modal_heading = preview_modal.querySelector("h2");
 
 // Attach the event listener to the parent container
 notesContainer.addEventListener("click", (e) => {
-    let note = e.target.closest(".note");
-    if (note) {
-      let noteBgColor = window.getComputedStyle(note).backgroundColor;
-      preview_modal_heading.style.backgroundColor = noteBgColor;
-      let preview_text = note.querySelector("p");
-      preview_modal.querySelector("p").textContent = preview_text.textContent;
-      preview_modal.showModal();
-    }
-  });
+  let note = e.target.closest(".note");
+  if (note) {
+    let noteBgColor = window.getComputedStyle(note).backgroundColor;
+    preview_modal_heading.style.backgroundColor = noteBgColor;
+    let preview_text = note.querySelector("p");
+    preview_modal.querySelector("p").textContent = preview_text.textContent;
+    preview_modal.showModal();
+  }
+});
 
 closeNoteBtn.addEventListener("click", () => {
   preview_modal.close();
