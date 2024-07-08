@@ -15,6 +15,8 @@ async function animation_bg(bgColor) {
   }, 0);
 }
 
+let updated_notes = document.querySelectorAll(".note");
+
 let colorbtn_show = false;
 
 let edit_note_btns = document.querySelectorAll(".edit-note-btn");
@@ -95,9 +97,9 @@ colorbtns.forEach((colorbtn) => {
   });
 });
 async function addNote(colorBtn, textAreaVal) {
-    let note = document.createElement("div");
-    note.classList.add("note");
-    note.innerHTML = `
+  let note = document.createElement("div");
+  note.classList.add("note");
+  note.innerHTML = `
         <div class="note-content">
           <p>${textAreaVal}</p>
           <div class="note-bottom">
@@ -107,44 +109,62 @@ async function addNote(colorBtn, textAreaVal) {
             <button class="edit-note-btn"><img src="edit.svg" alt="edit-btn-svg"></button>
           </div>
         </div>`;
-    note.style.backgroundColor = `#${cr_color}`;
-    let bgColor = `#${cr_color}`;
-    console.log(bgColor);
-    animation_bg(bgColor);
-    soundeffect();
-    let notesContainer = document.querySelector(".notes-container");
-    notesContainer.insertBefore(note, notesContainer.firstChild);
-    
-    let edit_note_btns = document.querySelectorAll(".edit-note-btn");
-  
-    // Attach edit event listeners
-    edit_note_btns.forEach((edit_note_btn) => {
-      edit_note_btn.addEventListener("click", (e) => {
-        let selected_note = e.target.closest(".note");
-        console.log(selected_note);
-        dialog.showModal();
-        let editing_modal = document.querySelector("dialog");
-        let text_edited = selected_note.querySelector(".note-content p");
-        note_textarea.value = text_edited.textContent;
-        editing_modal.querySelector(".save-note-btn").style.display = "none";
-        let save_edited = editing_modal.querySelector(".save-edited-note-btn");
-        save_edited.style.display = "flex";
+  note.style.backgroundColor = `#${cr_color}`;
+  let bgColor = `#${cr_color}`;
+  console.log(bgColor);
+  animation_bg(bgColor);
+  soundeffect();
+  let notesContainer = document.querySelector(".notes-container");
+  notesContainer.insertBefore(note, notesContainer.firstChild);
 
-        // Remove previous click event listener to prevent multiple triggers
-        save_edited.replaceWith(save_edited.cloneNode(true));
-        save_edited = editing_modal.querySelector(".save-edited-note-btn");
-  
-        save_edited.addEventListener("click", () => {
-          selected_note.querySelector("p").textContent = note_textarea.value;
-          console.log(selected_note);
-          editing_modal.querySelector(".save-edited-note-btn").style.display = "none";
-          editing_modal.querySelector(".save-note-btn").style.display = "flex";
+  let edit_note_btns = document.querySelectorAll(".edit-note-btn");
+
+  // Attach edit event listeners
+  edit_note_btns.forEach((edit_note_btn) => {
+    edit_note_btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        
+
+      let selected_note = e.target.closest(".note");
+      console.log(selected_note);
+
+      let noteBgColor = window.getComputedStyle(selected_note).backgroundColor;
+      
+
+      let editing_modal = document.querySelector("dialog");
+      let editing_modal_heading = editing_modal.querySelector("h2");
+      editing_modal_heading.style.backgroundColor = noteBgColor;
+      dialog.showModal();
+      let text_edited = selected_note.querySelector(".note-content p");
+      note_textarea.value = text_edited.textContent;
+      editing_modal.querySelector(".save-note-btn").style.display = "none";
+      let save_edited = editing_modal.querySelector(".save-edited-note-btn");
+      save_edited.style.display = "flex";
+      let delete_btn = editing_modal
+        .querySelector(".delete-note-btn")
+        .addEventListener("click", () => {
+          selected_note.remove();
           editing_modal.close();
+          updatenotes();
         });
+
+      // Remove previous click event listener to prevent multiple triggers
+      save_edited.replaceWith(save_edited.cloneNode(true));
+      save_edited = editing_modal.querySelector(".save-edited-note-btn");
+
+      save_edited.addEventListener("click", () => {
+        selected_note.querySelector("p").textContent = note_textarea.value;
+        console.log(selected_note);
+        editing_modal.querySelector(".save-edited-note-btn").style.display =
+          "none";
+        editing_modal.querySelector(".save-note-btn").style.display = "flex";
+        editing_modal.close();
       });
     });
-  }
-  
+  });
+}
+
 // hide color btns
 
 async function hidecolorbtns() {
@@ -192,4 +212,50 @@ addnotemodal_btn.addEventListener("click", (e) => {
     addNote(cr_color, (textAreaVal = "Note"));
     dialog.close();
   }
+  updatenotes();
+});
+
+async function updatenotes() {
+  updated_notes = document.querySelectorAll(".note");
+  console.log(updated_notes);
+  return updated_notes;
+}
+
+// search
+let search_input = document.querySelector(".search");
+
+search_input.addEventListener("input", (e) => {
+  let search_val = e.target.value;
+  let notes = document.querySelectorAll(".note");
+  notes.forEach((note) => {
+    let note_text = note.querySelector(".note-content p");
+    if (
+      note_text.textContent.toLowerCase().includes(search_val.toLowerCase())
+    ) {
+      note.style.display = "unset";
+    } else {
+      note.style.display = "none";
+    }
+  });
+});
+
+let notesContainer = document.querySelector(".notes-container");
+let preview_modal = document.querySelector(".preview-modal");
+let closeNoteBtn = document.querySelector(".close-note-btn.preview-close");
+let preview_modal_heading = preview_modal.querySelector("h2");
+
+// Attach the event listener to the parent container
+notesContainer.addEventListener("click", (e) => {
+    let note = e.target.closest(".note");
+    if (note) {
+      let noteBgColor = window.getComputedStyle(note).backgroundColor;
+      preview_modal_heading.style.backgroundColor = noteBgColor;
+      let preview_text = note.querySelector("p");
+      preview_modal.querySelector("p").textContent = preview_text.textContent;
+      preview_modal.showModal();
+    }
+  });
+
+closeNoteBtn.addEventListener("click", () => {
+  preview_modal.close();
 });
