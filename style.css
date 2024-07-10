@@ -410,7 +410,6 @@ button:hover {
   font-weight: 500;
   font-size: 16px;
   color: #8b8b8ba0;  
-  filter: blur(0.1px);
 }
 .gurjit span{
   color: #6c6c6c;
