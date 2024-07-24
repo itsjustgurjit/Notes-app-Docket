@@ -402,15 +402,27 @@ button:hover {
   max-width: 26%;
 }
 
-.gurjit{
+.gurjit {
   position: absolute;
   bottom: 0;
   right: 0;
   padding: 7px 15px;
   font-weight: 500;
   font-size: 16px;
-  color: #8b8b8ba0;  
+  color: #8b8b8ba0;
 }
-.gurjit span{
+.gurjit span {
   color: #6c6c6c;
+}
+#install-button {
+  border: none;
+  outline: none;
+  background: none;
+  scale: 0.4;
+  position: relative;
+  top: 25px;
+  left: -15px;
+}
+#install-button:hover {
+  cursor: pointer;
 }

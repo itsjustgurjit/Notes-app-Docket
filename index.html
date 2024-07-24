@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
   <meta charset="UTF-8" /><meta
     content="width=device-width,initial-scale=1"
     name="viewport"
@@ -8,6 +9,9 @@
     href="style.css"
     rel="stylesheet"
   />
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
   <div class="bg-animation-div"></div>
   <div class="sidebar">
     <div class="logo">NoteBoat</div>
@@ -56,7 +60,10 @@
   </dialog>
   <img src="edit.svg" style="display: none" />
   <div class="gurjit">
-    <i>Managed by <span>Gurjit</span></i>
+    <i>Managed by <span>Gurjit</span>
+    <button id="install-button"><svg width="64px" height="64px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#6c6c6c"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill="none" stroke="#6c6c6c" stroke-width="2" d="M12,18 L12,8 L12,18 Z M12,23 C18.0751322,23 23,18.0751322 23,12 C23,5.92486775 18.0751322,1 12,1 C5.92486775,1 1,5.92486775 1,12 C1,18.0751322 5.92486775,23 12,23 Z M17,12 L12,7 L7,12" transform="matrix(1 0 0 -1 0 24)"></path> </g></svg></button></i>
   </div>
   <script src="script.js"></script>
+  <script src="installasapp.js"></script>
+</body>
 </html>

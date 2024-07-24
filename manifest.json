@@ -1,0 +1,15 @@
+{
+    "name": "NoteBoat",
+    "short_name": "Notes",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "rgba(0, 0,0,0)",
+    "theme_color": "rgba(0, 0,0,0)",
+    "description": "Safe notes app",
+    "icons": [
+        {
+            "src": "icon2.png",
+            "sizes": "192x192"
+        }
+    ]
+  }
